@@ -16,65 +16,48 @@
                 all: unset;
             }
         }
-
     </style>
 </head>
 
 <body>
 
-    <nav class="navbar navbar-expand-lg bg-primary navbar-dark">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <div class="container-fluid">
-            <a href="/" class="navbar-brand">Agence</a>
-            <button class="navbar-toggler" type="button" data-bs-toggler="collapse" data-bs-target="#navbarNav" aria-expanded="false" aria-label="toggler navigation">
+            <a class="navbar-brand" href="/">Agence</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-
             @php
             $route = request()->route()->getName();
             @endphp
-
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a href="{{ route('admin.property.index') }}" @class(['nav-link', 'active'=> str_contains($route, 'property.')])>Gérer les biens</a>
+                        <a href="{{ route('admin.property.index') }}" class="nav-link {{ str_contains($route, 'property.') ? 'active' : '' }}">Gérer les biens</a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ route('admin.option.index') }}" @class(['nav-link', 'active'=> str_contains($route, 'option.')])>Gérer les options</a>
+                        <a href="{{ route('admin.option.index') }}" class="nav-link {{ str_contains($route, 'option.') ? 'active' : '' }}">Gérer les options</a>
                     </li>
                 </ul>
-
-                <div class="ms-auto">
+                <div class="d-flex">
                     @auth
-                    <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <form action="{{ route('logout') }}" method="post">
-                                @csrf
-                                @method('delete')
-                                
-                                <button class="nav-link">Se déconnecter</button>
-                            </form>
-                        </li>
-                    </ul>
+                    <form action="{{ route('logout') }}" method="POST" class="d-inline">
+                        @csrf
+                        <button type="submit" class="btn btn-outline-light">Se déconnecter</button>
+                    </form>
                     @endauth
                 </div>
             </div>
-
         </div>
     </nav>
 
-
-
-
-
-
-
-
     <div class="container mt-5">
-
         @include('shared.flash')
         @yield('content')
     </div>
 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         new TomSelect('select[multiple]', {
             plugins: {
@@ -82,8 +65,7 @@
                     title: 'Supprimer'
                 }
             }
-        })
-
+        });
     </script>
 
 </body>

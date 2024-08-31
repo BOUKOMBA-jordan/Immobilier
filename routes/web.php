@@ -1,11 +1,12 @@
 <?php
 
 //use \App\Http\Controllers\Admin\OptionController;
-use \App\Http\Controllers\PropertyController;
 use \App\Http\Controllers\HomeController;
+use \App\Http\Controllers\PropertyController;
 use App\Http\Controllers\PictureController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+
 
 
 
@@ -40,6 +41,9 @@ Route::get('/biens/{slug}{property}', [PropertyController::class, 'show'])->name
 Route::post('/biens/{property}/contact', [\App\Http\Controllers\PropertyController::class, 'contact'])->name('property.contact')->where([
     'property' => $idRegex
 ]);
+
+
+
 
 Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     Route::resource('property', \App\Http\Controllers\Admin\PropertyController::class)->except(['show']);

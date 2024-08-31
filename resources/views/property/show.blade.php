@@ -8,27 +8,35 @@
 <style>
     /* Styles pour le carousel */
     .carousel-item img {
-        width: 100%; /* Assurer que les images prennent toute la largeur du carousel */
-        height: 600px; /* Hauteur fixe pour toutes les images */
-        object-fit: cover; /* Couvrir le conteneur sans déformer l'image */
+        width: 100%;
+        /* Assurer que les images prennent toute la largeur du carousel */
+        height: 600px;
+        /* Hauteur fixe pour toutes les images */
+        object-fit: cover;
+        /* Couvrir le conteneur sans déformer l'image */
     }
 
     /* Style pour enlever le soulignement des liens */
     .contact-info a {
-        text-decoration: none; /* Enlever le soulignement */
+        text-decoration: none;
+        /* Enlever le soulignement */
     }
 
     .contact-info .phone-link {
-        color: #007bff; /* Couleur pour le téléphone */
+        color: #007bff;
+        /* Couleur pour le téléphone */
     }
 
     .contact-info .whatsapp-link {
-        color: #25D366; /* Couleur pour WhatsApp */
+        color: #25D366;
+        /* Couleur pour WhatsApp */
     }
 
     .contact-info a:hover {
-        text-decoration: underline; /* Ajouter un soulignement au survol si désiré */
+        text-decoration: underline;
+        /* Ajouter un soulignement au survol si désiré */
     }
+
 </style>
 
 <div class="container mt-4">
@@ -46,9 +54,9 @@
         <div id="propertyCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
             <div class="carousel-inner">
                 @foreach ($property->pictures as $picture)
-                    <div class="carousel-item @if ($loop->first) active @endif">
-                        <img src="{{ asset($picture->image) }}" class="d-block" alt="Image {{ $loop->index + 1 }}">
-                    </div>
+                <div class="carousel-item @if ($loop->first) active @endif">
+                    <img src="{{ asset($picture->image) }}" class="d-block" alt="Image {{ $loop->index + 1 }}">
+                </div>
                 @endforeach
             </div>
             <button class="carousel-control-prev" type="button" data-bs-target="#propertyCarousel" data-bs-slide="prev">
@@ -97,7 +105,7 @@
                 <h2>Spécificités</h2>
                 <ul class="list-group">
                     @foreach ($property->options as $option)
-                        <li class="list-group-item">{{ $option->name }}</li>
+                    <li class="list-group-item">{{ $option->name }}</li>
                     @endforeach
                 </ul>
             </div>
@@ -109,8 +117,8 @@
     <!-- Informations de Contact -->
     <div class="container mt-5 mb-5 text-center contact-info">
         <h2>Contact</h2>
-        <p>Pour plus d'informations, vous pouvez nous contacter directement :</p>
-        <div class="d-flex flex-column flex-sm-row justify-content-center align-items-center">
+        <p class="-mt-5">Pour plus d'informations, vous pouvez nous contacter directement :</p>
+        <div class="d-flex flex-column flex-sm-row justify-content-center align-items-center mt-5">
             <ul class="list-unstyled d-flex mb-3 mb-sm-0">
                 <li class="d-flex align-items-center me-3 me-sm-4 mb-2 mb-sm-0">
                     <i class="fas fa-phone-alt me-2 phone-link" style="font-size: 1.2rem;"></i>
@@ -126,7 +134,7 @@
             </button>
         </div>
     </div>
-    
+
 
     <!-- Modal -->
     <div class="modal fade" id="contactModal" tabindex="-1" aria-labelledby="contactModalLabel" aria-hidden="true">
@@ -139,19 +147,19 @@
                 <div class="modal-body">
                     <form action="{{ route('property.contact', $property) }}" method="post" class="vstack gap-3">
                         @csrf
-    
+
                         <div class="row">
                             @include('shared.input', ['class' => 'col-md-6', 'name' => 'firstname', 'label' => 'Prénom'])
                             @include('shared.input', ['class' => 'col-md-6', 'name' => 'lastname', 'label' => 'Nom'])
                         </div>
-    
+
                         <div class="row">
                             @include('shared.input', ['class' => 'col-md-6', 'name' => 'phone', 'label' => 'Téléphone'])
                             @include('shared.input', ['type' => 'email', 'class' => 'col-md-6', 'name' => 'email', 'label' => 'Email'])
                         </div>
-    
+
                         @include('shared.input', ['type' => 'textarea', 'class' => 'col-12', 'name' => 'message', 'label' => 'Votre message'])
-    
+
                         <div>
                             <button class="btn btn-primary">Nous contacter</button>
                         </div>
