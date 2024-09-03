@@ -2,29 +2,28 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Vehicle;
 use App\Models\Picture;
-use App\Models\Property;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
-use Illuminate\Validation\Rules\Exists;
 
-class PictureController extends Controller
+class VehicleImageController extends Controller
 {
-    public function index(int $propertyId)
+    public function index(int $vehicleId)
     {
-        $property = Property::findOrFail($propertyId);
-        $pictures = Picture::where('property_id', $propertyId)->get();
+        $vehicle = Vehicle::findOrFail($vehicleId);
+        $pictures = Picture::where('vehicle_id', $vehicleId)->get();
         
-        return view('propertyImage.index', compact('property', 'pictures'));
+        return view('vehicleImage.index', compact('vehicle', 'pictures'));
     }
 
-    public function store(Request $request, int $propertyId)
+    public function store(Request $request, int $vehicleId)
     {
         $request->validate([
             'pictures.*' => 'required|image|mimes:png,jfif,jpg,jpeg,webp|max:2048',
         ]);
 
-        $property = Property::findOrFail($propertyId);
+        $vehicle = Vehicle::findOrFail($vehicleId);
 
         $imageData = [];
         if ($files = $request->file('pictures')) {
@@ -32,12 +31,12 @@ class PictureController extends Controller
                 $extension = $file->getClientOriginalExtension();
                 $filename = $key . '-' . time() . '.' . $extension;
 
-                $path = 'upload/property/';
+                $path = 'upload/vehicle/';
 
                 $file->move(public_path($path), $filename);
 
                 $imageData[] = [
-                    'property_id' => $property->id,
+                    'vehicle_id' => $vehicle->id,
                     'image' => $path . $filename,
                 ];
             }
@@ -50,13 +49,13 @@ class PictureController extends Controller
         }
     }
     
-    public function destroy(int $propertyImageId)
+    public function destroy(int $vehicleImageId)
     {
-        $propertyImage = Picture::findOrFail($propertyImageId);
-        if(File::Exists($propertyImage->image)){
-            File::delete($propertyImage->image);
+        $vehicleImage = Picture::findOrFail($vehicleImageId);
+        if (File::exists($vehicleImage->image)) {
+            File::delete($vehicleImage->image);
         }
-        $propertyImage->delete();
+        $vehicleImage->delete();
 
         return redirect()->back()->with('status', 'Image Deleted');
     }

@@ -3,14 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\OptionFormRequest;
+use App\Http\Requests\Admin\VehicleOptionFormRequest;
 use App\Models\Option;
-//use Illuminate\Http\Request;
-
 
 class OptionController extends Controller
 {
-    
     public function index()
     {
         return view('admin.options.index', [
@@ -23,22 +20,23 @@ class OptionController extends Controller
      */
     public function create()
     {
-        $option = new Option();
         return view('admin.options.form', [
-            'option' => $option
+            'option' => new Option()
         ]);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(OptionFormRequest $request)
+    public function store(VehicleOptionFormRequest $request)
     {
-        $option = Option::create($request->validated());
-        return to_route('admin.option.index')->with('success', 'L\'option a bien été créé');
+        try {
+            $option = Option::create($request->validated());
+            return to_route('admin.option.index')->with('success', 'L\'option a bien été créée');
+        } catch (\Exception $e) {
+            return to_route('admin.option.index')->with('error', 'Une erreur est survenue lors de la création de l\'option');
+        }
     }
-
-   
 
     /**
      * Show the form for editing the specified resource.
@@ -53,10 +51,14 @@ class OptionController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(OptionFormRequest $request, Option $option)
+    public function update(VehicleOptionFormRequest $request, Option $option)
     {
-        $option->update($request->validated());
-        return to_route('admin.option.index')->with('success', 'L\'option a bien été modifié');
+        try {
+            $option->update($request->validated());
+            return to_route('admin.option.index')->with('success', 'L\'option a bien été modifiée');
+        } catch (\Exception $e) {
+            return to_route('admin.option.index')->with('error', 'Une erreur est survenue lors de la modification de l\'option');
+        }
     }
 
     /**
@@ -64,7 +66,11 @@ class OptionController extends Controller
      */
     public function destroy(Option $option)
     {
-        $option->delete();
-        return to_route('admin.option.index')->with('success', 'L\'option a bien été supprimé');
+        try {
+            $option->delete();
+            return to_route('admin.option.index')->with('success', 'L\'option a bien été supprimée');
+        } catch (\Exception $e) {
+            return to_route('admin.option.index')->with('error', 'Une erreur est survenue lors de la suppression de l\'option');
+        }
     }
 }

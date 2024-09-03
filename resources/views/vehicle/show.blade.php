@@ -1,7 +1,7 @@
 @extends('base')
 <!-- Favicon ico -->
 <link rel="icon" type="image/favicon.ico" href="favicon.ico">
-@section('title', $property->title)
+@section('title', $vehicle->make . ' ' . $vehicle->model)
 
 @section('content')
 
@@ -36,34 +36,33 @@
         text-decoration: underline;
         /* Ajouter un soulignement au survol si désiré */
     }
-
 </style>
 
 <div class="container mt-4">
-    <h1 class="display-4">{{ $property->title }}</h1>
-    <h2 class="text-muted">{{ $property->rooms }} pièces - {{ $property->surface }} m²</h2>
+    <h1 class="display-4">{{ $vehicle->make }} {{ $vehicle->model }}</h1>
+    <h2 class="text-muted">{{ $vehicle->year }} - {{ $vehicle->mileage }} km</h2>
 
     <div class="text-primary fw-bold" style="font-size: 2.5rem;">
-        {{ number_format($property->price, 0, '', ' ') }} Fcfa
+        {{ number_format($vehicle->price, 0, '', ' ') }} Fcfa
     </div>
 
     <hr>
 
     <div class="mt-4">
         <!-- Carrousel -->
-        <div id="propertyCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
+        <div id="vehicleCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
             <div class="carousel-inner">
-                @foreach ($property->pictures as $picture)
+                @foreach ($vehicle->pictures as $picture)
                 <div class="carousel-item @if ($loop->first) active @endif">
                     <img src="{{ asset($picture->image) }}" class="d-block" alt="Image {{ $loop->index + 1 }}">
                 </div>
                 @endforeach
             </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#propertyCarousel" data-bs-slide="prev">
+            <button class="carousel-control-prev" type="button" data-bs-target="#vehicleCarousel" data-bs-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                 <span class="visually-hidden">Précédent</span>
             </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#propertyCarousel" data-bs-slide="next">
+            <button class="carousel-control-next" type="button" data-bs-target="#vehicleCarousel" data-bs-slide="next">
                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
                 <span class="visually-hidden">Suivant</span>
             </button>
@@ -71,32 +70,35 @@
     </div>
 
     <div class="mt-4">
-        <p>{!! nl2br(e($property->description)) !!}</p>
+        <p>{!! nl2br(e($vehicle->description)) !!}</p>
         <div class="row">
             <div class="col-lg-8 col-md-12">
                 <h2>Caractéristiques</h2>
                 <table class="table table-striped">
                     <tr>
-                        <td>Surface habitable</td>
-                        <td>{{ $property->surface }} m²</td>
+                        <td>Marque</td>
+                        <td>{{ $vehicle->make }}</td>
                     </tr>
                     <tr>
-                        <td>Pièces</td>
-                        <td>{{ $property->rooms }}</td>
+                        <td>Modèle</td>
+                        <td>{{ $vehicle->model }}</td>
                     </tr>
                     <tr>
-                        <td>Chambres</td>
-                        <td>{{ $property->bedrooms }}</td>
+                        <td>Année</td>
+                        <td>{{ $vehicle->year }}</td>
                     </tr>
                     <tr>
-                        <td>Étage</td>
-                        <td>{{ $property->floor ?: 'Rez-de-chaussée' }}</td>
+                        <td>Kilométrage</td>
+                        <td>{{ $vehicle->mileage }} km</td>
+                    </tr>
+                    <tr>
+                        <td>Couleur</td>
+                        <td>{{ $vehicle->color }}</td>
                     </tr>
                     <tr>
                         <td>Localisation</td>
                         <td>
-                            {{ $property->address }}<br>
-                            {{ $property->city }} ({{ $property->postal_code }})
+                            {{ $vehicle->location }}
                         </td>
                     </tr>
                 </table>
@@ -104,7 +106,7 @@
             <div class="col-lg-4 col-md-12">
                 <h2>Spécificités</h2>
                 <ul class="list-group">
-                    @foreach ($property->options as $option)
+                    @foreach ($vehicle->options as $option)
                     <li class="list-group-item">{{ $option->name }}</li>
                     @endforeach
                 </ul>
@@ -130,22 +132,21 @@
                 </li>
             </ul>
             <button type="button" class="btn btn-primary mt-3 mt-sm-0 ms-sm-3" data-bs-toggle="modal" data-bs-target="#contactModal">
-                Intéressé par ce bien ? laissez nous mail
+                Intéressé par ce véhicule ? laissez nous mail
             </button>
         </div>
     </div>
-
 
     <!-- Modal -->
     <div class="modal fade" id="contactModal" tabindex="-1" aria-labelledby="contactModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="contactModalLabel">Contactez-nous pour ce bien</h5>
+                    <h5 class="modal-title" id="contactModalLabel">Contactez-nous pour ce véhicule</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ route('property.contact', $property) }}" method="post" class="vstack gap-3">
+                    <form action="{{ route('vehicle.contact', $vehicle) }}" method="post" class="vstack gap-3">
                         @csrf
 
                         <div class="row">

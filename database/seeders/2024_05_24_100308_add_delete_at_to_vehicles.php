@@ -11,11 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('property_images', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('property_id')->constrained()->onDelete('cascade'); // Contrainte de clé étrangère
-            $table->string('image');
-            $table->timestamps();
+        Schema::table('vehicles', function (Blueprint $table) {
+            $table->softDeletes(); // Ajoute la colonne `deleted_at` pour les suppressions logiques
         });
     }
 
@@ -24,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('property_images');
+        Schema::table('vehicles', function (Blueprint $table) {
+            $table->dropSoftDeletes(); // Supprime la colonne `deleted_at`
+        });
     }
 };

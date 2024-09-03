@@ -57,26 +57,47 @@
             font-size: 1rem; /* Réduction de la taille du texte sur les petits écrans */
         }
     }
+
+    /* Styles pour les véhicules */
+    .vehicle-card {
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 1rem;
+        background-color: #f9f9f9;
+    }
+
+    .vehicle-card img {
+        max-width: 100%;
+        border-radius: 8px;
+    }
+
+    .vehicle-card h3 {
+        font-size: 1.25rem;
+    }
+
+    .vehicle-card p {
+        font-size: 1rem;
+    }
 </style>
 
 <div class="bg-custom mb-5 mt-5">
     <div class="container">
         <h1 class="display-4 mb-4">Agence ImmoVision</h1>
         <p class="lead mb-4">
-            Chez ImmoVision, notre vision est de simplifier la recherche de logements pour nos clients,
-            qu'ils soient à la recherche d'une maison à louer ou à acheter. Nous nous engageons à rendre
-            ce processus aussi fluide et agréable que possible. Pour les bailleurs, notre objectif est
-            de faciliter la mise en relation avec des locataires ou des acheteurs potentiels.
+            Chez ImmoVision, nous simplifions la recherche de véhicules pour nos clients,
+            qu'ils cherchent à acheter ou louer un véhicule. Nous nous engageons à rendre
+            ce processus aussi fluide et agréable que possible. Pour les vendeurs, notre objectif est
+            de faciliter la mise en relation avec des acheteurs potentiels.
         </p>
     </div>
 </div>
 
 <div class="container">
-    <h2>Nos derniers biens</h2>
+    <h2>Nos derniers véhicules</h2>
     <div class="row">
-        @foreach ($properties as $property)
+        @foreach ($vehicles as $vehicle)
         <div class="col-md-4 mb-4">
-            @include('property.card')
+            @include('vehicle.card', ['vehicle' => $vehicle])
         </div>
         @endforeach
     </div>

@@ -1,6 +1,5 @@
 @php
     $class ??= null;
-
 @endphp
 
 <div @class(["form-check form-switch", $class])>
@@ -10,7 +9,6 @@
     <label class="form-check-label" for="{{ $name }}">{{ $label }}</label>
 
     @error($name)
-
     <div class="invalid-feedback">
         {{ $message }}
     </div>

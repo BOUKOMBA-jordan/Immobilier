@@ -11,10 +11,10 @@
     <title>@yield('title') | Administration</title>
 
     <style>
-        @layer reset {
-            button {
-                all: unset;
-            }
+        /* Réinitialiser les styles de boutons spécifiques */
+        button {
+            all: unset;
+            /* Vous pouvez ajouter d'autres styles ici si nécessaire */
         }
     </style>
 </head>
@@ -33,7 +33,7 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a href="{{ route('admin.property.index') }}" class="nav-link {{ str_contains($route, 'property.') ? 'active' : '' }}">Gérer les biens</a>
+                        <a href="{{ route('admin.vehicle.index') }}" class="nav-link {{ str_contains($route, 'vehicle.') ? 'active' : '' }}">Gérer les véhicules</a>
                     </li>
                     <li class="nav-item">
                         <a href="{{ route('admin.option.index') }}" class="nav-link {{ str_contains($route, 'option.') ? 'active' : '' }}">Gérer les options</a>
@@ -59,6 +59,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
+        // Initialisation de Tom Select pour les sélecteurs multiples
         new TomSelect('select[multiple]', {
             plugins: {
                 remove_button: {

@@ -28,8 +28,6 @@
             color: #e0e0e0; /* Couleur du texte des onglets au survol */
         }
 
-
-
         .login-btn {
             padding: 0.25rem 0.5rem; /* Réduit l'espace intérieur du bouton */
             font-size: 0.75rem; /* Réduit la taille du texte et de l'icône */
@@ -45,6 +43,27 @@
         .login-btn:hover {
             color: #ffffff; /* Couleur du texte au survol */
             border-color: #ffffff; /* Couleur de la bordure au survol */
+        }
+
+        /* Styles supplémentaires pour le véhicule */
+        .vehicle-card {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 1rem;
+            background-color: #f9f9f9;
+        }
+
+        .vehicle-card img {
+            max-width: 100%;
+            border-radius: 8px;
+        }
+
+        .vehicle-card h3 {
+            font-size: 1.25rem;
+        }
+
+        .vehicle-card p {
+            font-size: 1rem;
         }
     </style>
 </head>
@@ -82,8 +101,9 @@
                         <a href="/" class="nav-link {{ str_contains($route, 'home') ? 'active' : '' }}">Accueil</a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ route('property.index') }}" class="nav-link {{ str_contains($route, 'property.') ? 'active' : '' }}">Maison</a>
+                        <a href="{{ route('vehicle.index') }}" class="nav-link {{ str_contains($route, 'vehicle.') ? 'active' : '' }}">Véhicules</a>
                     </li>
+                   
                 </ul>
                 <ul class="navbar-nav ms-auto">
                     @guest
@@ -94,7 +114,6 @@
                     </li>
                     @endguest
                     
-
                     @auth
                     <li class="nav-item">
                         <form action="{{ route('logout') }}" method="POST" class="d-inline">

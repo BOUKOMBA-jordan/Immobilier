@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class SearchPropertiesRequest extends FormRequest
+class VehicleContactRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,10 +22,11 @@ class SearchPropertiesRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'price' => ['numeric', 'gte:0', 'nullable'],
-            'surface' => ['numeric', 'gte:0', 'nullable'],
-            'rooms' => ['numeric', 'gte:0', 'nullable'],
-            'title' => ['string', 'nullable'],
+            'firstname' => ['required', 'string', 'min:2'],  // Prénom de l'utilisateur
+            'lastname' => ['required', 'string', 'min:2'],   // Nom de l'utilisateur
+            'phone' => ['required', 'string', 'min:9'],      // Téléphone de l'utilisateur
+            'email' => ['required', 'email', 'min:4'],       // Email de l'utilisateur
+            'message' => ['required', 'string', 'min:4']     // Message de l'utilisateur
         ];
     }
 }

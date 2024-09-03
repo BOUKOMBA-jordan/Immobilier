@@ -9,10 +9,11 @@ class Picture extends Model
 {
     use HasFactory;
 
-    protected $table = 'property_images';
+    protected $table = 'property_images'; // Nom de la table, à adapter si nécessaire
 
     protected $fillable = [
         'property_id',
+        'vehicle_id',
         'image',
     ];
 
@@ -21,6 +22,14 @@ class Picture extends Model
      */
     public function property()
     {
-        return $this->belongsTo(Property::class);
+        return $this->belongsTo(Vehicle::class);
+    }
+
+    /**
+     * Get the vehicle that owns the picture.
+     */
+    public function vehicle()
+    {
+        return $this->belongsTo(Vehicle::class);
     }
 }

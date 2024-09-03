@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('options', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->timestamps();
+            $table->string('name'); // Nom de l'option
+            $table->timestamps(); // Ajoute les colonnes created_at et updated_at
         });
     }
 

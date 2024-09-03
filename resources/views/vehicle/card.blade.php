@@ -10,7 +10,7 @@
         transform: translateY(-10px); /* Légère élévation au survol */
         box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Ombre plus intense au survol */
     }
-    .property-image {
+    .vehicle-image {
         width: 100%;
         height: 200px; /* Hauteur fixe pour une meilleure uniformité */
         object-fit: cover; /* Assure que l'image couvre le conteneur */
@@ -24,7 +24,7 @@
         transition: color 0.3s; /* Transition pour la couleur au survol */
     }
     .card-title a:hover {
-        color: #007bff; /* Change la couleur du texte au survol */
+        color: #0056b3; /* Change la couleur du texte au survol */
     }
     .card-text {
         color: #666; /* Couleur de texte plus douce */
@@ -35,15 +35,15 @@
 </style>
 
 <div class="card">
-    <img src="{{ asset($property->pictures->isNotEmpty() ? $property->pictures->first()->image : 'default-image.jpg') }}" class="card-img-top property-image" alt="Image de {{ $property->title }}">
+    <img src="{{ asset($vehicle->pictures->isNotEmpty() ? $vehicle->pictures->first()->image : 'default-image.jpg') }}" class="card-img-top vehicle-image" alt="Image de {{ $vehicle->make }} {{ $vehicle->model }}">
     
     <div class="card-body">
         <h5 class="card-title">
-            <a href="{{ route('property.show', ['slug' => $property->getSlug(), 'property' => $property]) }}">{{ $property->title }}</a>
+            <a href="{{ route('vehicle.show', ['slug' => $vehicle->getSlug(), 'vehicle' => $vehicle]) }}">{{ $vehicle->make }} {{ $vehicle->model }}</a>
         </h5>
-        <p class="card-text">{{ $property->surface }} m² - {{ $property->city }} ({{ $property->postal_code }})</p>
+        <p class="card-text">{{ $vehicle->year }} - {{ $vehicle->color }}</p>
         <div class="text-primary fw-bold" style="font-size: 1.4rem;">
-            {{ number_format($property->price, 0, '.', ' ') }} Fcfa
+            {{ number_format($vehicle->price, 0, '.', ' ') }} Fcfa
         </div>
     </div>
 </div>

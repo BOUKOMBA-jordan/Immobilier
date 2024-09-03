@@ -1,14 +1,14 @@
 @extends('admin.admin')
 
-@section('title', 'Upload Images')
+@section('title', 'Télécharger des Images')
 
 @section('content')
 <div class="container mt-5">
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
-                <h4>Upload Images
-                    <a href="{{ route('admin.property.index') }}" class="btn btn-primary float-end">Retour</a>
+                <h4>Télécharger des Images
+                    <a href="{{ route('admin.vehicle.index') }}" class="btn btn-primary float-end">Retour</a>
                 </h4>
             </div>
             <div class="card-body">
@@ -17,7 +17,7 @@
                     <div class="alert alert-success">{{ session('status') }}</div>
                 @endif
 
-                <h5>Nom du Bien: {{ $property->title }}</h5>
+                <h5>Nom du Véhicule: {{ $vehicle->title }}</h5>
                 <hr>
 
                 @if($errors->any())
@@ -28,12 +28,12 @@
                     </ul>
                 @endif
 
-                <form action="{{ route('admin.property.upload.store', $property->id) }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('admin.vehicle.upload.store', $vehicle->id) }}" method="POST" enctype="multipart/form-data">
                     @csrf
 
                     <!-- Images Upload -->
                     <div class="mb-3">
-                        <label for="pictures" class="form-label">Upload Images (Max: 20 images only)</label>
+                        <label for="pictures" class="form-label">Télécharger des Images (Max: 20 images seulement)</label>
                         <input type="file" name="pictures[]" class="form-control" multiple>
                     </div>
 
@@ -43,11 +43,11 @@
         </div>
 
         <div class="col-md-12 mt-4">
-            @foreach ($pictures as $propImg)
+            @foreach ($pictures as $vehImg)
                 <div class="d-inline-block position-relative mr-2">
-                    <img src="{{ asset($propImg->image) }}" class="border p-2 m-3" style="width: 100px; height: 100px;" alt="Image">
+                    <img src="{{ asset($vehImg->image) }}" class="border p-2 m-3" style="width: 100px; height: 100px;" alt="Image">
 
-                    <form action="{{ route('admin.property.image.destroy', $propImg->id) }}" method="POST" class="position-absolute top-0 right-0">
+                    <form action="{{ route('admin.vehicle.image.destroy', $vehImg->id) }}" method="POST" class="position-absolute top-0 right-0">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="btn btn-danger btn-sm">X</button>
@@ -55,9 +55,7 @@
                 </div>
             @endforeach
 
-            <!-- property.index.blade.php -->
-
-
+            <!-- vehicle.index.blade.php -->
 
         </div>
     </div>

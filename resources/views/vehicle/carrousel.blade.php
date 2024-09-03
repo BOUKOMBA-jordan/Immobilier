@@ -1,22 +1,22 @@
 @extends('base')
 
-@section('title', $property->title)
+@section('title', $vehicle->make . ' ' . $vehicle->model)
 
 @section('content')
 <div class="container mt-5">
-    <h1 class="display-4 mb-4">{{ $property->title }}</h1>
-    <p class="lead">{{ $property->description }}</p>
+    <h1 class="display-4 mb-4">{{ $vehicle->make }} {{ $vehicle->model }}</h1>
+    <p class="lead">{{ $vehicle->description }}</p>
 
     <!-- Carrousel pour les images -->
     <div id="carouselExample" class="carousel slide shadow-sm rounded" data-bs-ride="carousel">
         <div class="carousel-inner">
-            @forelse ($property->pictures as $picture)
+            @forelse ($vehicle->pictures as $picture)
             <div class="carousel-item @if ($loop->first) active @endif">
-                <img src="{{ asset($picture->image) }}" class="d-block w-100 rounded" alt="Image de {{ $property->title }}">
+                <img src="{{ asset('storage/' . $picture->filename) }}" class="d-block w-100 rounded" alt="Image de {{ $vehicle->make }} {{ $vehicle->model }}">
             </div>
             @empty
             <div class="carousel-item active">
-                <img src="{{ asset('default-image.jpg') }}" class="d-block w-100 rounded" alt="Aucune image disponible pour {{ $property->title }}">
+                <img src="{{ asset('default-image.jpg') }}" class="d-block w-100 rounded" alt="Aucune image disponible pour {{ $vehicle->make }} {{ $vehicle->model }}">
             </div>
             @endforelse
         </div>
@@ -30,11 +30,12 @@
         </button>
     </div>
 
-    <!-- Autres informations sur la propriété -->
+    <!-- Autres informations sur le véhicule -->
     <ul class="list-unstyled mt-4">
-        <li><strong>Surface:</strong> {{ $property->surface }} m²</li>
-        <li><strong>Prix:</strong> <span class="text-danger">{{ number_format($property->price, 2, '.', ' ') }} €</span></li>
-        <li><strong>Ville:</strong> {{ $property->city }}</li>
+        <li><strong>Année:</strong> {{ $vehicle->year }}</li>
+        <li><strong>Prix:</strong> <span class="text-danger">{{ number_format($vehicle->price, 2, '.', ' ') }} €</span></li>
+        <li><strong>Kilométrage:</strong> {{ $vehicle->mileage }} km</li>
+        <li><strong>Couleur:</strong> {{ $vehicle->color }}</li>
     </ul>
 </div>
 
@@ -71,7 +72,7 @@
         color: #555;
     }
 
-    /* Liste des caractéristiques de la propriété */
+    /* Liste des caractéristiques du véhicule */
     ul.list-unstyled {
         font-size: 1.1rem;
         color: #333;
